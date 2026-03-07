@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Active Subscriptions</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f4f6f9;
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:220px;
+height:100vh;
+background:#111827;
+color:white;
+position:fixed;
+left:0;
+top:0;
+padding:20px;
+transition:0.3s;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+}
+
+.sidebar ul{
+list-style:none;
+}
+
+.sidebar li{
+padding:12px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.sidebar li:hover{
+background:#2563eb;
+}
+
+/* MAIN */
+
+.main{
+margin-left:220px;
+padding:30px;
+width:100%;
+}
+
+/* TOPBAR */
+
+.topbar{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:20px;
+}
+
+.menu-btn{
+font-size:22px;
+border:none;
+background:none;
+cursor:pointer;
+display:none;
+}
+
+/* TABLE */
+
+.table-container{
+overflow-x:auto;
+}
+
+.table-box{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:650px;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+background:#f9fafb;
+}
+
+.active{
+color:green;
+font-weight:bold;
+}
+
+.expiring{
+color:orange;
+font-weight:bold;
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+.menu-btn{
+display:block;
+}
+
+.sidebar{
+left:-220px;
+}
+
+.sidebar.show{
+left:0;
+}
+
+.main{
+margin-left:0;
+padding:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Staarbox</h2>
+
+<ul>
+<li onclick="closeMenu();location.href='dashboard.html'">Dashboard</li>
+<li onclick="closeMenu();location.href='products.html'">Products</li>
+<li onclick="closeMenu();location.href='inventory.html'">Inventory</li>
+<li onclick="closeMenu();location.href='customers.html'">Customers</li>
+<li onclick="closeMenu();location.href='settings.html'">Settings</li>
+</ul>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="topbar">
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<h2>Active Subscriptions</h2>
+
+</div>
+
+<div class="table-container">
+
+<div class="table-box">
+
+<table>
+
+<thead>
+<tr>
+<th>Customer ID</th>
+<th>Name</th>
+<th>Phone</th>
+<th>Plan</th>
+<th>Start Date</th>
+<th>Renewal Date</th>
+<th>Days Left</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>C101</td>
+<td>Arun</td>
+<td>9876543210</td>
+<td>Premium</td>
+<td>1 Mar</td>
+<td>30 Mar</td>
+<td>12</td>
+<td class="active">Active</td>
+</tr>
+
+<tr>
+<td>C102</td>
+<td>Priya</td>
+<td>9873334444</td>
+<td>Standard</td>
+<td>2 Mar</td>
+<td>31 Mar</td>
+<td>13</td>
+<td class="active">Active</td>
+</tr>
+
+<tr>
+<td>C103</td>
+<td>Suresh</td>
+<td>9876549999</td>
+<td>Kids</td>
+<td>5 Mar</td>
+<td>4 Apr</td>
+<td>2</td>
+<td class="expiring">Expiring Soon</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+/* HAMBURGER MENU */
+
+function toggleMenu(){
+document.querySelector(".sidebar").classList.toggle("show");
+}
+
+function closeMenu(){
+document.querySelector(".sidebar").classList.remove("show");
+}
+
+/* CLOSE WHEN CLICK OUTSIDE */
+
+document.addEventListener("click",function(e){
+
+const sidebar=document.querySelector(".sidebar");
+const button=document.querySelector(".menu-btn");
+
+if(!sidebar.contains(e.target) && !button.contains(e.target)){
+sidebar.classList.remove("show");
+}
+
+});
+
+</script>
+
+</body>
+</html>

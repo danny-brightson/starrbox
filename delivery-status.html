@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Delivery Status</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#f4f6f9;
+display:flex;
+min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:220px;
+height:100vh;
+background:#111827;
+color:white;
+position:fixed;
+left:0;
+top:0;
+padding:20px;
+transition:0.3s;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+}
+
+.sidebar ul{
+list-style:none;
+}
+
+.sidebar li{
+padding:12px;
+cursor:pointer;
+border-radius:6px;
+}
+
+.sidebar li:hover{
+background:#2563eb;
+}
+
+/* MAIN */
+
+.main{
+margin-left:220px;
+padding:30px;
+width:100%;
+}
+
+/* TOPBAR */
+
+.topbar{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:20px;
+}
+
+.menu-btn{
+font-size:22px;
+border:none;
+background:none;
+cursor:pointer;
+display:none;
+}
+
+/* CARDS */
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card h3{
+color:#666;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.card h1{
+font-size:26px;
+}
+
+/* TABLE CONTAINER */
+
+.table-container{
+width:100%;
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+margin-top:30px;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+min-width:750px;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+background:#f9fafb;
+}
+
+/* STATUS */
+
+.delivered{
+color:green;
+font-weight:bold;
+}
+
+.pending{
+color:orange;
+font-weight:bold;
+}
+
+.out{
+color:#2563eb;
+font-weight:bold;
+}
+
+.failed{
+color:red;
+font-weight:bold;
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+.menu-btn{
+display:block;
+}
+
+.sidebar{
+left:-220px;
+}
+
+.sidebar.show{
+left:0;
+}
+
+.main{
+margin-left:0;
+padding:20px;
+}
+
+.cards{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<h2>Staarbox</h2>
+
+<ul>
+<li onclick="closeMenu();location.href='dashboard.html'">Dashboard</li>
+<li onclick="closeMenu();location.href='products.html'">Products</li>
+<li onclick="closeMenu();location.href='inventory.html'">Inventory</li>
+<li onclick="closeMenu();location.href='customers.html'">Customers</li>
+<li onclick="closeMenu();location.href='settings.html'">Settings</li>
+</ul>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="topbar">
+
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+<h2>Today's Delivery Status</h2>
+
+</div>
+
+<!-- DELIVERY SUMMARY -->
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Deliveries</h3>
+<h1>128</h1>
+</div>
+
+<div class="card">
+<h3>Completed Deliveries</h3>
+<h1>92</h1>
+</div>
+
+<div class="card">
+<h3>Pending Deliveries</h3>
+<h1>31</h1>
+</div>
+
+<div class="card">
+<h3>Out for Delivery</h3>
+<h1>5</h1>
+</div>
+
+</div>
+
+
+<!-- DELIVERY TABLE -->
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Phone</th>
+<th>Pincode</th>
+<th>Delivery Address</th>
+<th>Delivery Time</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>#101</td>
+<td>Arun</td>
+<td>9876543210</td>
+<td>600040</td>
+<td>Anna Nagar</td>
+<td>8:30 AM</td>
+<td class="delivered">Delivered</td>
+</tr>
+
+<tr>
+<td>#102</td>
+<td>Ravi</td>
+<td>9871234567</td>
+<td>600042</td>
+<td>Velachery</td>
+<td>9:00 AM</td>
+<td class="pending">Pending</td>
+</tr>
+
+<tr>
+<td>#103</td>
+<td>Priya</td>
+<td>9873334444</td>
+<td>600017</td>
+<td>T Nagar</td>
+<td>9:30 AM</td>
+<td class="out">Out for Delivery</td>
+</tr>
+
+<tr>
+<td>#104</td>
+<td>Suresh</td>
+<td>9876549999</td>
+<td>600020</td>
+<td>Adyar</td>
+<td>10:00 AM</td>
+<td class="failed">Delivery Failed</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* HAMBURGER MENU */
+
+function toggleMenu(){
+document.querySelector(".sidebar").classList.toggle("show");
+}
+
+function closeMenu(){
+document.querySelector(".sidebar").classList.remove("show");
+}
+
+/* CLOSE MENU WHEN CLICK OUTSIDE */
+
+document.addEventListener("click",function(e){
+
+const sidebar=document.querySelector(".sidebar");
+const button=document.querySelector(".menu-btn");
+
+if(!sidebar.contains(e.target) && !button.contains(e.target)){
+sidebar.classList.remove("show");
+}
+
+});
+
+</script>
+
+</body>
+</html>
