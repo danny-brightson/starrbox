@@ -93,15 +93,6 @@ border-radius:10px;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
-.card h3{
-color:#666;
-margin-bottom:10px;
-}
-
-.card h1{
-font-size:26px;
-}
-
 /* TABLE */
 
 .table-card{
@@ -119,7 +110,7 @@ width:100%;
 
 table{
 border-collapse:collapse;
-min-width:650px;
+min-width:750px;
 width:100%;
 }
 
@@ -134,15 +125,19 @@ th{
 background:#f9fafb;
 }
 
-/* STATUS */
+/* INPUTS */
 
-.low{
-color:red;
-font-weight:bold;
+input[type="number"]{
+width:80px;
+padding:6px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
-.good{
-color:green;
+select{
+padding:6px;
+border-radius:6px;
+border:1px solid #ccc;
 font-weight:bold;
 }
 
@@ -181,17 +176,14 @@ grid-template-columns:1fr;
 <!-- SIDEBAR -->
 
 <div class="sidebar">
-
 <h2>Staarbox</h2>
-
 <ul>
-<li onclick="closeMenu();location.href='dashboard.html'">Dashboard</li>
-<li onclick="closeMenu();location.href='products.html'">Products</li>
-<li onclick="closeMenu();location.href='inventory.html'">Inventory</li>
-<li onclick="closeMenu();location.href='customers.html'">Customers</li>
-<li onclick="closeMenu();location.href='settings.html'">Settings</li>
+<li onclick="closeMenu()">Dashboard</li>
+<li onclick="closeMenu()">Products</li>
+<li onclick="closeMenu()">Inventory</li>
+<li onclick="closeMenu()">Customers</li>
+<li onclick="closeMenu()">Settings</li>
 </ul>
-
 </div>
 
 <!-- MAIN -->
@@ -206,7 +198,6 @@ grid-template-columns:1fr;
 <!-- SUMMARY -->
 
 <div class="cards">
-
 <div class="card">
 <h3>Total Items</h3>
 <h1>48</h1>
@@ -221,13 +212,11 @@ grid-template-columns:1fr;
 <h3>Out of Stock</h3>
 <h1>2</h1>
 </div>
-
 </div>
 
-<!-- INVENTORY TABLE -->
+<!-- TABLE -->
 
 <div class="table-card">
-
 <h3>Inventory Stock</h3>
 
 <div class="table-scroll">
@@ -241,6 +230,7 @@ grid-template-columns:1fr;
 <th>Category</th>
 <th>Quantity</th>
 <th>Unit</th>
+<th>Price (₹)</th>
 <th>Status</th>
 </tr>
 </thead>
@@ -251,90 +241,48 @@ grid-template-columns:1fr;
 <td>I001</td>
 <td>Apple</td>
 <td>Fruit</td>
-<td>120</td>
+<td><input type="number" value="120" oninput="updateStatus(this)"></td>
 <td>Kg</td>
-<td class="good">In Stock</td>
-</tr>
-
-<tr>
-<td>I002</td>
-<td>Banana</td>
-<td>Fruit</td>
-<td>80</td>
-<td>Kg</td>
-<td class="good">In Stock</td>
-</tr>
-
-<tr>
-<td>I003</td>
-<td>Carrot</td>
-<td>Vegetable</td>
-<td>40</td>
-<td>Kg</td>
-<td class="good">In Stock</td>
+<td><input type="number" value="120"></td>
+<td>
+<select onchange="manualOverride(this)">
+<option value="good">In Stock</option>
+<option value="low">Low Stock</option>
+<option value="out">Out of Stock</option>
+</select>
+</td>
 </tr>
 
 <tr>
 <td>I004</td>
 <td>Almonds</td>
 <td>Nuts</td>
-<td>10</td>
+<td><input type="number" value="10" oninput="updateStatus(this)"></td>
 <td>Kg</td>
-<td class="low">Low Stock</td>
-</tr>
-
-<tr>
-<td>I005</td>
-<td>Chia Seeds</td>
-<td>Seeds</td>
-<td>8</td>
-<td>Kg</td>
-<td class="low">Low Stock</td>
+<td><input type="number" value="800"></td>
+<td>
+<select onchange="manualOverride(this)">
+<option value="good">In Stock</option>
+<option value="low" selected>Low Stock</option>
+<option value="out">Out of Stock</option>
+</select>
+</td>
 </tr>
 
 <tr>
 <td>I006</td>
 <td>Eggs</td>
 <td>Dairy</td>
-<td>300</td>
+<td><input type="number" value="300" oninput="updateStatus(this)"></td>
 <td>Pieces</td>
-<td class="good">In Stock</td>
-</tr>
-
-<tr>
-<td>I007</td>
-<td>Box Packaging</td>
-<td>Packaging</td>
-<td>200</td>
-<td>Units</td>
-<td class="good">In Stock</td>
-</tr>
-
-<tr>
-<td>I008</td>
-<td>Sandwich Wrapper</td>
-<td>Packaging</td>
-<td>150</td>
-<td>Units</td>
-<td class="good">In Stock</td>
-</tr>
-
-<tr>
-<td>I009</td>
-<td>Blender Machine</td>
-<td>Equipment</td>
-<td>3</td>
-<td>Units</td>
-<td class="good">Available</td>
-</tr>
-
-<tr>
-<td>I010</td>
-<td>Knife Set</td>
-<td>Equipment</td>
-<td>5</td>
-<td>Units</td>
-<td class="good">Available</td>
+<td><input type="number" value="6"></td>
+<td>
+<select onchange="manualOverride(this)">
+<option value="good" selected>In Stock</option>
+<option value="low">Low Stock</option>
+<option value="out">Out of Stock</option>
+</select>
+</td>
 </tr>
 
 </tbody>
@@ -342,12 +290,13 @@ grid-template-columns:1fr;
 </table>
 
 </div>
-
 </div>
 
 </div>
 
 <script>
+
+/* MENU */
 
 function toggleMenu(){
 document.querySelector(".sidebar").classList.toggle("show");
@@ -358,15 +307,59 @@ document.querySelector(".sidebar").classList.remove("show");
 }
 
 document.addEventListener("click",function(e){
-
 const sidebar=document.querySelector(".sidebar");
 const button=document.querySelector(".menu-btn");
 
 if(!sidebar.contains(e.target) && !button.contains(e.target)){
 sidebar.classList.remove("show");
 }
-
 });
+
+/* INVENTORY LOGIC */
+
+function updateStatus(input){
+
+let row = input.closest("tr");
+let qty = parseInt(input.value);
+let select = row.querySelector("select");
+
+// stop auto if manual override
+if(select.dataset.manual === "true") return;
+
+if(qty <= 0){
+select.value = "out";
+}
+else if(qty <= 10){
+select.value = "low";
+}
+else{
+select.value = "good";
+}
+
+applyColor(select);
+}
+
+function manualOverride(select){
+select.dataset.manual = "true";
+applyColor(select);
+}
+
+function applyColor(select){
+
+if(select.value === "good"){
+select.style.color = "green";
+}
+else if(select.value === "low"){
+select.style.color = "red";
+}
+else{
+select.style.color = "gray";
+}
+}
+
+/* INITIAL COLOR APPLY */
+
+document.querySelectorAll("select").forEach(applyColor);
 
 </script>
 
